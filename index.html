@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1b5e20">
+<link rel="icon" href="icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fertiliser Stock &amp; Sales</title>
+<style>
+:root{--bg:#f2f5ee;--card:#fff;--ink:#16251a;--mute:#6a766b;--line:#e2e8dd;--acc:#2e7d32;--acc2:#1b5e20;--accink:#fff;--bad:#c62828;--badbg:#fdecea;--good:#2e7d32;--soft:#eaf3e8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1511;--card:#19221b;--ink:#e9f1e7;--mute:#98a699;--line:#27332a;--acc:#4caf50;--acc2:#2e7d32;--accink:#08130a;--bad:#ff8a80;--badbg:#3a1f1d;--good:#7bd37f;--soft:#1f2b21;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1511;--card:#19221b;--ink:#e9f1e7;--mute:#98a699;--line:#27332a;--acc:#4caf50;--acc2:#2e7d32;--accink:#08130a;--bad:#ff8a80;--badbg:#3a1f1d;--good:#7bd37f;--soft:#1f2b21;color-scheme:dark}
+html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:560px;margin:0 auto;padding:14px 14px 110px}
+button{font:inherit;cursor:pointer;color:inherit}
+input{font:inherit;color:var(--ink)}
+.hero{background:linear-gradient(135deg,var(--acc2),var(--acc));color:#fff;border-radius:20px;padding:14px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.hero .title{font-size:13px;opacity:.85;margin-bottom:8px;letter-spacing:.03em;text-transform:uppercase}
+.datebar{display:flex;gap:8px;align-items:center}
+.datebar input{flex:1;min-width:0;padding:10px;border:0;border-radius:12px;background:rgba(255,255,255,.18);color:#fff;font-weight:600;text-align:center;color-scheme:dark}
+.nb{width:42px;height:42px;border-radius:12px;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:22px}
+.stats{display:flex;gap:10px;margin-top:12px}
+.stats div{flex:1;background:rgba(255,255,255,.14);border-radius:14px;padding:10px 12px;min-width:0}
+.stats small{display:block;font-size:12px;opacity:.85}
+.stats b{font-size:21px;line-height:1.25;overflow-wrap:anywhere}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.pr{display:flex;align-items:center;gap:10px}
+.pi{flex:1;min-width:0}
+.pn{font-weight:650;overflow-wrap:anywhere}
+.ps{font-size:14px;color:var(--mute);margin-top:2px}
+.ps.bad{color:var(--bad);font-weight:600}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;background:var(--soft);color:var(--good);font-weight:650;font-size:14px}
+.pill.bad{background:var(--badbg);color:var(--bad)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.card h3{margin:0 0 8px;font-size:16px}
+.mute{color:var(--mute);font-size:14px}
+.row2{display:flex;gap:8px;margin-top:8px}
+.fld{flex:1;min-width:0;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--bg);width:100%}
+.lbl{flex:1;min-width:0;font-size:12px;color:var(--mute)}
+.lbl .fld{display:block;margin-top:3px}
+.btn{padding:11px 16px;border-radius:12px;border:0;background:var(--acc);color:var(--accink);font-weight:650}
+.btn.g{background:transparent;border:1px solid var(--line);color:var(--ink);font-weight:500}
+.btn.r{background:var(--badbg);color:var(--bad)}
+.btn.s{padding:9px 12px;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--bg);font-size:14px}
+.chip.on{background:var(--acc);border-color:var(--acc);color:var(--accink);font-weight:650}
+.panel{border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.seg{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{flex:1;border:0;background:var(--bg);padding:10px}
+.seg button.on{background:var(--acc);color:var(--accink);font-weight:650}
+.big{font-size:20px;font-weight:750;line-height:1.1}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border:0;border-top:1px solid var(--line);background:none;width:100%;text-align:left}
+.sub{padding:0 0 10px 4px;font-size:15px}
+.sub div{display:flex;justify-content:space-between;gap:8px;padding:2px 0}
+.sub .h{color:var(--mute);font-size:13px;margin-top:6px;text-transform:uppercase;letter-spacing:.04em}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{font-size:11px;color:var(--mute);text-align:right;font-weight:600;text-transform:uppercase;padding-bottom:4px}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl td{padding:8px 0 8px 6px;border-top:1px solid var(--line);text-align:right}
+.tbl td:first-child{padding-left:0}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kp div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}
+.kp small{color:var(--mute);font-size:12px}
+.kp b{display:block;font-size:20px;margin-top:2px;overflow-wrap:anywhere}
+.bars{display:flex;align-items:flex-end;gap:2px;height:96px;margin-top:8px}
+.bars i{flex:1;background:var(--acc);border-radius:3px 3px 0 0;min-height:2px;opacity:.9}
+.bars i.z{background:var(--line)}
+.bl{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);margin-top:4px}
+.share{height:8px;border-radius:99px;background:var(--soft);margin-top:4px;overflow:hidden}
+.share i{display:block;height:100%;background:var(--acc)}
+.empty{text-align:center;padding:26px 12px;color:var(--mute)}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));gap:6px;z-index:5}
+.nav button{flex:1;border:0;background:none;padding:8px 4px;border-radius:12px;font-size:13px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:2px}
+.nav button span{font-size:20px}
+.nav button.on{background:var(--soft);color:var(--good);font-weight:650}
+#status{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:99px;font-size:14px;z-index:6;display:none;max-width:90%;text-align:center}
+.x{border:0;background:none;color:var(--mute);font-size:20px;width:34px;height:34px}
+.shop{display:flex;align-items:center;gap:8px;margin:2px 2px 12px}.shop h1{margin:0;font-size:22px;flex:1;min-width:0;overflow-wrap:anywhere}.shop .fld{font-size:18px;font-weight:650}
+.tm{font-size:12px;color:var(--mute);width:64px;flex:none}
+</style>
+</head>
+<body>
+<div class="wrap"><div id="app"></div></div>
+<div id="status"></div>
+<nav class="nav">
+  <button data-act="tab" data-n="sell" id="t-sell"><span>🧾</span>Sales</button>
+  <button data-act="tab" data-n="stock" id="t-stock"><span>📦</span>Stock</button>
+  <button data-act="tab" data-n="hist" id="t-hist"><span>📊</span>History</button>
+</nav>
+<script>
+const COMMON=['Urea','DAP','MOP (Potash)','SSP','NPK 19-19-19','NPK 20-20-0'];
+const LS='fert-tracker-v2';
+const pad=n=>String(n).padStart(2,'0');
+const ds2=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const todayStr=()=>ds2(new Date());
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const r2=x=>Math.round((+x||0)*100)/100;
+const INR=n=>'₹'+r2(n).toLocaleString('en-IN',{maximumFractionDigits:2});
+const fmt=d=>{const [y,m,dd]=d.split('-').map(Number);return new Date(y,m-1,dd).toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'})};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function qty(kg,bk){
+  const neg=kg<-0.004;kg=Math.abs(kg);
+  if(!bk)return(neg?'−':'')+r2(kg)+' kg';
+  let b=Math.floor(kg/bk+1e-9),rem=r2(kg-b*bk);if(rem>=bk){b++;rem=0}
+  const p=[];if(b)p.push(b+(b===1?' bag':' bags'));if(rem)p.push(rem+' kg');if(!p.length)p.push('0 bags');
+  return(neg?'−':'')+p.join(' ');
+}
+
+let products=[],days={},date=todayStr(),tab='sell',openP=null,confirmDel=null,openH={},per='7';
+const S0=()=>({n:null,bags:'',kg:'',amt:'',manual:false});let sell=S0(),shop='Sri Balamurugan',editShop=false;
+let db=null,dl=null,mode='wait',pendingRender=false,prodDirty=false,stTimer;
+const dirty=new Set(),timers={};
+
+const P=n=>products.find(p=>p.name===n);
+const D=d=>days[d]||{tx:[]};
+const allTx=()=>Object.values(days).flatMap(x=>x.tx);
+const stockKg=n=>allTx().reduce((a,t)=>t.n===n?a+(t.type==='sale'?-t.kg:t.kg):a,0);
+const kgRate=p=>p.kgPrice>0?p.kgPrice:(p.bagKg?p.price/p.bagKg:0);
+const tm=t=>t.ts?new Date(t.ts).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true}).toLowerCase():'';
+function tot(list){let b=0,k=0;list.forEach(t=>{const p=P(t.n),w=Math.abs(t.kg);if(p&&p.bagKg){let x=Math.floor(w/p.bagKg+1e-9),rem=w-x*p.bagKg;if(rem>=p.bagKg-1e-9){x++;rem=0}b+=x;k+=rem}else k+=w});k=r2(k);const s=[];if(b)s.push(b+(b===1?' bag':' bags'));if(k)s.push(k+' kg');return s.length?s.join(' '):'0'}
+function headHtml(){return editShop?`<div class="shop"><input class="fld" id="shn" value="${esc(shop)}" maxlength="50"><button class="btn s" data-act="shopsave">Save</button></div>`:`<div class="shop"><h1>${esc(shop)}</h1><button class="x" data-act="shopedit" aria-label="edit shop name">✎</button></div><div class="mute" style="margin:-8px 2px 12px">Fertiliser stock &amp; sales</div>`}
+async function saveShop(){if(db){try{await db.doc('meta/shop').set({name:shop})}catch(e){say('Could not save the name.')}}else lsSave()}
+
+function normP(x){return typeof x==='string'?{name:x,bagKg:50,price:0,kgPrice:0}:{name:x.name,bagKg:+x.bagKg||50,price:+x.price||0,kgPrice:+x.kgPrice||0}}
+function norm(v){
+  v=v||{};if(Array.isArray(v.tx))return{tx:v.tx};
+  const f=n=>(P(n)||{}).bagKg||50,tx=[];
+  Object.entries(v.items||{}).forEach(([n,c])=>tx.push({id:'ls'+n,n,type:'sale',kg:c*f(n),amt:0}));
+  Object.entries(v.rec||{}).forEach(([n,c])=>tx.push({id:'lr'+n,n,type:c>0?'in':'adj',kg:c*f(n),amt:0}));
+  return{tx};
+}
+function lsLoad(){try{const o=JSON.parse(localStorage.getItem(LS)||'{}');products=(o.products||[]).map(normP);days=o.days||{};if(o.shop)shop=o.shop}catch(e){}}
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify({products,days,shop}))}catch(e){}}
+function say(t){const s=document.getElementById('status');clearTimeout(stTimer);if(!t){s.style.display='none';return}s.textContent=t;s.style.display='block';stTimer=setTimeout(()=>s.style.display='none',3500)}
+
+async function saveDay(d){
+  if(db){try{await db.doc('sales/'+d).set({date:d,tx:D(d).tx})}catch(e){say('Could not save. Check your internet.')}}
+  else lsSave();
+  dirty.delete(d);
+}
+function queueDay(d){if(!db)lsSave();dirty.add(d);clearTimeout(timers[d]);timers[d]=setTimeout(()=>saveDay(d),400)}
+async function saveProducts(){
+  if(db){try{await db.doc('meta/products').set({list:products})}catch(e){say('Could not save the list.')}}
+  else lsSave();
+  prodDirty=false;
+}
+function mutate(d,fn){const nx={tx:D(d).tx.slice()};fn(nx);days[d]=nx;queueDay(d);render()}
+function setProducts(list){products=list;prodDirty=true;saveProducts()}
+
+const calcAmt=()=>{const p=P(sell.n),b=Number(sell.bags)||0,k=Number(sell.kg)||0;if(!p||!(b>0||k>0))return '';return r2(b*p.price+k*kgRate(p))};
+function addSale(n,bags,k,amt){
+  const p=P(n);if(!p)return false;bags=Number(bags)||0;k=Number(k)||0;
+  if(!(bags>0||k>0)){say('Enter bags or kg');return false}
+  const kg=r2(bags*p.bagKg+k);
+  if(amt===''||amt==null||isNaN(Number(amt)))amt=bags*p.price+k*kgRate(p);
+  mutate(date,x=>x.tx.push({id:uid(),n,type:'sale',kg,amt:r2(amt),ts:Date.now()}));
+  const left=stockKg(n);
+  say(left<0?'Stock of '+n+' is now short. Add stock.':'Sale added. '+qty(left,p.bagKg)+' left');return true;
+}
+function addStock(n,bags,k){
+  const p=P(n);bags=Number(bags)||0;k=Number(k)||0;if(!p||!(bags>0||k>0)){say('Enter bags or kg');return false}
+  const kg=r2(bags*p.bagKg+k);mutate(todayStr(),x=>x.tx.push({id:uid(),n,type:'in',kg,amt:0,ts:Date.now()}));
+  say('Added '+qty(kg,p.bagKg)+' of '+n);return true;
+}
+function setExact(n,bags,k){
+  const p=P(n);bags=Number(bags)||0;k=Number(k)||0;if(!p||bags<0||k<0){say('Enter bags or kg');return false}
+  const diff=r2(bags*p.bagKg+k-stockKg(n));if(Math.abs(diff)<0.005){say('Already matches');return true}
+  mutate(todayStr(),x=>x.tx.push({id:uid(),n,type:'adj',kg:diff,amt:0,ts:Date.now()}));say('Stock corrected');return true;
+}
+const fv=(n,f)=>{const e=[...document.querySelectorAll('[data-f]')].find(x=>x.dataset.f===f&&x.dataset.n===n);return e?e.value:''};
+const gv=id=>{const e=document.getElementById(id);return e?e.value:''};
+function newProduct(){
+  const name=gv('np').trim(),bagKg=Number(gv('nb')),price=Number(gv('npp')||0),kp=Number(gv('nkp')||0),bags=Number(gv('nq')||0),nk=Number(gv('nk')||0);
+  if(!name){say('Enter the fertiliser name');return}
+  if(!(bagKg>0)){say('Enter kg per bag');return}
+  if(products.some(p=>p.name.toLowerCase()===name.toLowerCase())){say('That item already exists');return}
+  setProducts(products.concat({name,bagKg,price:price>0?price:0,kgPrice:kp>0?kp:0}));
+  if(bags>0||nk>0)addStock(name,bags,nk);else render();
+}
+function saveRate(n){
+  const bagKg=Number(fv(n,'bagKg')),price=Number(fv(n,'price')||0),kp=Number(fv(n,'kgPrice')||0);
+  if(!(bagKg>0)){say('Enter kg per bag');return}
+  setProducts(products.map(p=>p.name===n?{name:n,bagKg,price:price>0?price:0,kgPrice:kp>0?kp:0}:p));
+  say('Rates saved');render();
+}
+
+function sellView(){
+  const x=D(date).tx.filter(t=>t.type==='sale');
+  const rev=x.reduce((a,t)=>a+t.amt,0),kgs=x.reduce((a,t)=>a+t.kg,0);
+  const isT=date===todayStr();
+  const cards=products.map(p=>{
+    const s=stockKg(p.name),mine=x.filter(t=>t.n===p.name),o=sell.n===p.name;
+    const st=s<-0.004?`<div class="ps bad">Short by ${qty(-s,p.bagKg)}. Add stock</div>`:s<=0.004?`<div class="ps bad">Out of stock</div>`:`<div class="ps">In stock: <span class="pill">${qty(s,p.bagKg)}</span></div>`;
+    const rate=p.price>0?`${INR(p.price)}/bag · ${INR(kgRate(p))}/kg`:'Rate not set (see Stock tab)';
+    const today=mine.length?`<div class="ps">Sold: ${qty(mine.reduce((a,t)=>a+t.kg,0),p.bagKg)} · ${INR(mine.reduce((a,t)=>a+t.amt,0))}</div>`:'';
+    return `<div class="pc"><div class="pr"><div class="pi"><div class="pn">${esc(p.name)}</div>${st}<div class="ps">${p.bagKg} kg bag · ${rate}</div>${today}</div>
+      <div style="display:flex;flex-direction:column;gap:6px"><button class="btn s" data-act="sopen" data-n="${esc(p.name)}">${o?'Close':'Sell…'}</button></div></div>
+      ${o?`<div class="panel">
+        <div class="row2" style="margin-top:0"><label class="lbl">Bags<input class="fld" id="sb" type="number" inputmode="decimal" min="0" value="${esc(sell.bags)}"></label><label class="lbl">Kg<input class="fld" id="sk" type="number" inputmode="decimal" min="0" value="${esc(sell.kg)}"></label>
+        <label class="lbl">Amount (₹)<input class="fld" id="sa" type="number" inputmode="decimal" min="0" value="${esc(sell.amt)}"></label></div>
+        <div class="mute" style="margin-top:6px">You can sell bags and kg together, for example 2 bags and 10 kg. The amount is filled from the rate. Change it if you gave a discount.</div>
+        <div class="btns"><button class="btn" data-act="addsale" data-n="${esc(p.name)}">Add sale</button></div></div>`:''}</div>`}).join('');
+  const list=x.slice().reverse().map(t=>{const p=P(t.n);return `<div style="display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid var(--line)"><span class="tm">${tm(t)}</span><span style="flex:1;min-width:0">${esc(t.n)}<div class="mute">${qty(t.kg,p&&p.bagKg)}</div></span><b>${INR(t.amt)}</b><button class="x" data-act="deltx" data-n="${t.id}" aria-label="delete sale">×</button></div>`}).join('');
+  return `<div class="hero"><div class="title">${isT?'Today':'Selected day'}</div>
+    <div class="datebar"><button class="nb" data-act="prev" aria-label="previous day">‹</button><input type="date" id="dt" value="${date}"><button class="nb" data-act="next" aria-label="next day">›</button></div>
+    <div class="stats"><div><small>Sales</small><b>${INR(rev)}</b></div><div><small>Sold</small><b>${tot(x)}</b><small>${r2(kgs)} kg total</small></div></div>
+    ${isT?'':'<p style="margin:10px 0 0"><button class="chip" style="color:#fff;background:rgba(255,255,255,.18);border:0" data-act="today">Back to today</button></p>'}</div>
+    ${cards||`<div class="card empty">No fertilisers yet.<br><br><button class="btn" data-act="tab" data-n="stock">Add your stock</button></div>`}
+    ${x.length?`<div class="card"><h3>Sales log (with time)</h3>${list}</div>`:''}`;
+}
+
+function stockView(){
+  const kg=products.reduce((a,p)=>a+stockKg(p.name),0),val=products.reduce((a,p)=>a+Math.max(0,stockKg(p.name))*kgRate(p),0);
+  const chips=COMMON.filter(c=>!products.some(p=>p.name.toLowerCase()===c.toLowerCase())).map(c=>`<button class="chip" data-act="chip" data-n="${esc(c)}">${esc(c)}</button>`).join('');
+  const cards=products.map(p=>{const n=p.name,s=stockKg(n),o=openP===n,E=esc(n);
+    return `<div class="pc"><div class="pr"><div class="pi"><div class="pn">${E}</div><div class="ps">${p.bagKg} kg bag · ${p.price>0?INR(p.price)+'/bag · '+INR(kgRate(p))+'/kg':'Rate not set'}</div></div>
+      <div style="text-align:right"><div class="big" style="${s<=0.004?'color:var(--bad)':''}">${qty(s,p.bagKg)}</div><div class="mute">${r2(s)} kg</div></div></div>
+      <div class="btns"><button class="btn s g" data-act="open" data-n="${E}">${o?'Close':'Add stock / edit'}</button></div>
+      ${o?`<div class="panel"><div class="row2"><label class="lbl">Bags<input class="fld" type="number" inputmode="decimal" min="0" placeholder="e.g. 20" data-f="q" data-n="${E}"></label><label class="lbl">Kg<input class="fld" type="number" inputmode="decimal" min="0" placeholder="e.g. 10" data-f="k" data-n="${E}"></label></div>
+        <div class="btns"><button class="btn" data-act="addstock" data-n="${E}">+ Add new stock</button><button class="btn g" data-act="setexact" data-n="${E}">Set exact stock</button></div>
+        <div class="mute" style="margin-top:14px"><b>Bag size and rates</b></div>
+        <div class="row2"><label class="lbl">Kg per bag<input class="fld" type="number" inputmode="decimal" value="${p.bagKg}" data-f="bagKg" data-n="${E}"></label><label class="lbl">Rate per bag (₹)<input class="fld" type="number" inputmode="decimal" value="${p.price||''}" data-f="price" data-n="${E}"></label></div>
+        <div class="row2"><label class="lbl">Rate per kg (₹), optional<input class="fld" type="number" inputmode="decimal" value="${p.kgPrice||''}" placeholder="auto: ${r2(p.bagKg?p.price/p.bagKg:0)}" data-f="kgPrice" data-n="${E}"></label></div>
+        <div class="btns"><button class="btn" data-act="saverate" data-n="${E}">Save rates</button><button class="btn r" data-act="del" data-n="${E}">${confirmDel===n?'Tap again to remove':'Remove item'}</button></div></div>`:''}</div>`}).join('');
+  return `<div class="hero"><div class="title">Stock in shop</div><div class="stats"><div><small>Total stock</small><b>${tot(products.map(p=>({n:p.name,kg:Math.max(0,stockKg(p.name))})))}</b><small>${r2(kg)} kg total</small></div></div></div>
+    ${cards||'<div class="card empty">Your fertilisers will be listed here.</div>'}
+    <div class="card"><h3>Add a fertiliser</h3><div class="row2" style="margin-top:0"><label class="lbl">Name<input class="fld" id="np" maxlength="60" placeholder="e.g. Urea"></label></div>
+    <div class="row2"><label class="lbl">Kg per bag<input class="fld" id="nb" type="number" inputmode="decimal" value="50"></label><label class="lbl">Rate per bag (₹)<input class="fld" id="npp" type="number" inputmode="decimal"></label></div>
+    <div class="row2"><label class="lbl">Rate per kg (₹), optional<input class="fld" id="nkp" type="number" inputmode="decimal"></label></div>
+    <div class="row2"><label class="lbl">Bags in stock now<input class="fld" id="nq" type="number" inputmode="decimal"></label><label class="lbl">Extra kg<input class="fld" id="nk" type="number" inputmode="decimal"></label></div>
+    <div class="btns"><button class="btn" data-act="newp" style="flex:1">Add to stock</button></div>
+    ${chips?`<div class="chips">${chips}</div>`:''}</div>`;
+}
+
+function histView(){
+  let from='';if(per!=='all'){const t=new Date();t.setDate(t.getDate()-(Number(per)-1));from=ds2(t)}
+  const dl2=Object.keys(days).filter(d=>days[d].tx.length&&d>=from).sort();
+  if(!Object.keys(days).some(d=>days[d].tx.length))return '<div class="card empty">No records yet. Add stock and sales to see statistics.</div>';
+  const sales=dl2.flatMap(d=>days[d].tx.filter(t=>t.type==='sale').map(t=>({...t,d})));
+  const rev=sales.reduce((a,t)=>a+t.amt,0),kg=sales.reduce((a,t)=>a+t.kg,0),by={};
+  sales.forEach(t=>{const b=by[t.n]||(by[t.n]={kg:0,amt:0,c:0});b.kg+=t.kg;b.amt+=t.amt;b.c++});
+  const act=new Set(sales.map(s=>s.d)).size,best=Object.entries(by).sort((a,b)=>b[1].amt-a[1].amt)[0];
+  const N=per==='7'?7:30,dates=[];for(let i=N-1;i>=0;i--){const t=new Date();t.setDate(t.getDate()-i);dates.push(ds2(t))}
+  const dr=dates.map(d=>days[d]?days[d].tx.filter(t=>t.type==='sale').reduce((a,t)=>a+t.amt,0):0),mx=Math.max(1,...dr);
+  const bars=dr.map((v,i)=>`<i class="${v?'':'z'}" style="height:${Math.max(2,v/mx*100)}%" title="${esc(fmt(dates[i]))}: ${INR(v)}"></i>`).join('');
+  const names=Object.keys(by).concat(products.map(p=>p.name).filter(n=>!by[n]));
+  const mxA=Math.max(1,...Object.values(by).map(b=>b.amt));
+  const trs=names.map(n=>{const p=P(n),b=by[n]||{kg:0,amt:0},s=stockKg(n);
+    return `<tr><td>${esc(n)}<div class="share"><i style="width:${b.amt/mxA*100}%"></i></div></td><td>${qty(b.kg,p&&p.bagKg)}</td><td>${INR(b.amt)}</td><td style="${s<=0.004?'color:var(--bad);font-weight:650':''}">${qty(s,p&&p.bagKg)}</td></tr>`}).join('');
+  const list=dl2.slice().reverse().map(d=>{const x=days[d].tx,sl=x.filter(t=>t.type==='sale'),ins=x.filter(t=>t.type!=='sale');
+    const line=t=>{const p=P(t.n);return `<div><span>${tm(t)?tm(t)+' · ':''}${esc(t.n)} · ${qty(Math.abs(t.kg),p&&p.bagKg)}${t.type==='adj'?' (correction)':''}</span><span>${t.type==='sale'?INR(t.amt):(t.kg>=0?'+':'−')}</span></div>`};
+    return `<button class="hrow" data-act="exp" data-n="${d}"><span>${esc(fmt(d))}</span><span>${sl.length?`<span class="pill">${INR(sl.reduce((a,t)=>a+t.amt,0))}</span>`:''} ${ins.length?'<span class="pill bad">Stock in</span>':''}</span></button>
+      ${openH[d]?`<div class="sub">${sl.length?'<div class="h">Sold</div>':''}${sl.map(line).join('')}${ins.length?'<div class="h">Stock changes</div>':''}${ins.map(line).join('')}</div>`:''}`}).join('');
+  const chip=(v,l)=>`<button class="chip ${per===v?'on':''}" data-act="per" data-n="${v}">${l}</button>`;
+  return `<div class="chips" style="margin:0 0 12px">${chip('7','Last 7 days')}${chip('30','Last 30 days')}${chip('all','All time')}</div>
+    <div class="kp"><div><small>Revenue</small><b>${INR(rev)}</b></div><div><small>Total sold</small><b>${tot(sales)}</b><small>${r2(kg)} kg total</small></div>
+    <div><small>Avg per selling day</small><b>${INR(act?rev/act:0)}</b></div><div><small>Best seller</small><b>${best?esc(best[0]):'-'}</b></div></div>
+    <div class="card"><h3>Daily sales</h3><div class="mute">Max ${INR(mx>1?mx:0)}</div><div class="bars">${bars}</div><div class="bl"><span>${esc(fmt(dates[0]).split(',')[1]||'')}</span><span>Today</span></div></div>
+    <div class="card"><h3>By fertiliser</h3><table class="tbl"><tr><th>Item</th><th>Sold</th><th>Revenue</th><th>Left</th></tr>${trs}</table>
+    ${dl?'<div class="btns"><button class="btn g" data-act="csvlog">Download daily log (CSV)</button><button class="btn g" data-act="csvstock">Download stock (CSV)</button></div>':''}</div>
+    <div class="card"><h3>Day by day</h3><div class="mute">Tap a day for details</div>${list||'<div class="mute" style="padding:8px 0">Nothing in this period.</div>'}</div>`;
+}
+
+function render(){
+  ['sell','stock','hist'].forEach(t=>document.getElementById('t-'+t).className=tab===t?'on':'');
+  document.getElementById('app').innerHTML=headHtml()+(tab==='sell'?sellView():tab==='stock'?stockView():histView())+(tab==='sell'?'':bkHtml());
+  if(mode==='local')document.getElementById('app').insertAdjacentHTML('beforeend','<p class="mute">Saved on this device only.</p>');
+}
+function softRender(){const a=document.activeElement;if(a&&a.tagName==='INPUT')pendingRender=true;else render()}
+document.addEventListener('focusout',()=>{if(pendingRender){pendingRender=false;setTimeout(render,0)}});
+function shift(k){const [y,m,d]=date.split('-').map(Number);date=ds2(new Date(y,m-1,d+k));render()}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b||b.tagName==='INPUT')return;
+  const a=b.dataset.act,n=b.dataset.n;
+  if(a==='tab'){tab=n;window.scrollTo(0,0);render()}
+  else if(a==='quick')addSale(n,1,0,'');
+  else if(a==='sopen'){sell=sell.n===n?S0():Object.assign(S0(),{n});render()}
+  else if(a==='noop'){}
+  else if(a==='addsale'){if(addSale(n,sell.bags,sell.kg,sell.amt))sell=S0();render()}
+  else if(a==='deltx'){mutate(date,x=>{x.tx=x.tx.filter(t=>t.id!==n)})}
+  else if(a==='prev')shift(-1);
+  else if(a==='next')shift(1);
+  else if(a==='today'){date=todayStr();render()}
+  else if(a==='open'){openP=openP===n?null:n;confirmDel=null;render()}
+  else if(a==='addstock'){if(addStock(n,fv(n,'q'),fv(n,'k')))openP=null;render()}
+  else if(a==='setexact'){const v=fv(n,'q'),w=fv(n,'k');if(v===''&&w===''){say('Enter the bags and kg you have');return}if(setExact(n,v,w))openP=null;render()}
+  else if(a==='saverate')saveRate(n);
+  else if(a==='del'){if(confirmDel===n){setProducts(products.filter(p=>p.name!==n));confirmDel=null;openP=null}else confirmDel=n;render()}
+  else if(a==='chip'){const i=document.getElementById('np');i.value=n;i.focus()}
+  else if(a==='newp')newProduct();
+  else if(a==='exp'){openH[n]=!openH[n];render()}
+  else if(a==='per'){per=n;render()}else if(a==='shopedit'){editShop=true;render();const i=document.getElementById('shn');if(i)i.focus()}else if(a==='shopsave'){shop=gv('shn').trim()||shop;editShop=false;saveShop();render()}
+  else if(a==='csvlog')exportLog();else if(a==='csvstock')exportStock();else if(a==='bk')backup();
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='sb'||t.id==='sk'){if(t.id==='sb')sell.bags=t.value;else sell.kg=t.value;if(!sell.manual){sell.amt=calcAmt();const a=document.getElementById('sa');if(a)a.value=sell.amt}}
+  else if(t.id==='sa'){sell.amt=t.value;sell.manual=true}
+});
+document.addEventListener('change',e=>{if(e.target.id==='dt'&&e.target.value){date=e.target.value;render()}});
+
+const csvq=v=>'"'+String(v).replace(/"/g,'""')+'"';
+async function saveCsv(name,rows){try{await dl.save({filename:name,data:'\ufeff'+rows.map(r=>r.map(csvq).join(',')).join('\r\n')})}catch(e){}}
+async function exportLog(){
+  const rows=[['Date','Time','Type','Fertiliser','Quantity','Total kg','Amount (Rs)']];
+  Object.keys(days).sort().forEach(d=>days[d].tx.slice().sort((a,b)=>(a.ts||0)-(b.ts||0)).forEach(t=>{const p=P(t.n);rows.push([d,tm(t),t.type==='sale'?'Sale':t.type==='in'?'Stock added':'Correction',t.n,qty(Math.abs(t.kg),p&&p.bagKg),(t.kg<0?'-':'')+r2(Math.abs(t.kg)),t.type==='sale'?r2(t.amt):''])}));
+  await saveCsv('daily-log-'+todayStr()+'.csv',rows);
+}
+async function exportStock(){
+  const rows=[['Fertiliser','Kg per bag','Rate per bag (Rs)','Rate per kg (Rs)','Total received','Total sold','In stock','In stock (kg)']];
+  const tx=allTx();
+  products.forEach(p=>{const n=p.name,rc=tx.filter(t=>t.n===n&&t.type!=='sale').reduce((a,t)=>a+t.kg,0),sd=tx.filter(t=>t.n===n&&t.type==='sale').reduce((a,t)=>a+t.kg,0),st=stockKg(n);rows.push([n,p.bagKg,p.price||'',r2(kgRate(p))||'',qty(rc,p.bagKg),qty(sd,p.bagKg),qty(st,p.bagKg),r2(st)])});
+  await saveCsv('stock-'+todayStr()+'.csv',rows);
+}
+
+
+function lastBk(){try{return localStorage.getItem(LS+'-lastbackup')}catch(e){return null}}
+async function backup(){const o={app:'fertiliser-tracker',v:2,savedAt:new Date().toISOString(),shop,products,days};await dl.save({filename:'shop-backup-'+todayStr()+'.json',data:JSON.stringify(o)});try{localStorage.setItem(LS+'-lastbackup',todayStr())}catch(e){}render();say('Backup file saved')}
+function restoreFile(f){const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||!Array.isArray(o.products)||typeof o.days!=='object')throw 0;if(!confirm('Replace all data on this phone with this backup?'))return;products=o.products.map(normP);if(o.shop)shop=o.shop;days={};Object.entries(o.days).forEach(([d,v])=>days[d]=norm(v));lsSave();render();say('Backup restored')}catch(e){say('That file is not a valid backup')}};r.readAsText(f)}
+function bkHtml(){const lb=lastBk();return `<div class="card"><h3>Backup</h3><div class="mute">Your data is saved only on this phone. Save a backup file regularly, for example every week, and keep it in Google Drive or send it to yourself on WhatsApp. ${lb?'Last backup: '+esc(fmt(lb))+'.':'No backup yet.'}</div><div class="btns"><button class="btn" data-act="bk">Save backup</button><label class="btn g" style="cursor:pointer">Restore backup<input type="file" accept=".json,application/json" id="rf" style="display:none"></label></div></div>`}
+document.addEventListener('change',e=>{if(e.target.id==='rf'&&e.target.files[0]){restoreFile(e.target.files[0]);e.target.value=''}});
+dl={save:async({filename,data})=>{const b=new Blob([data],{type:filename.endsWith('.json')?'application/json':'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}};
+mode='local';lsLoad();render();
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
